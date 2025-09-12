@@ -1,10 +1,8 @@
 "use client";
 import useProdutosModel from "./viewModel";
+import { ProdutoViewProps } from "./viewModel";
 
-export interface ProdutoViewProps {}
-
-export default function ProdutosView() {
-  const { data, loading, } = useProdutosModel();
+export default function ProdutosView({data,error,errors,handleSubmit,loading,onSubmit,produto,register,reset}: ProdutoViewProps) {
   return (
     <div>
       <ul className="w-72 bg-[red]">

@@ -5,9 +5,19 @@ import {
   ProdutoData,
   ProdutosModel,
 } from "@/models/produtos/types/produtos-props-model";
-import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-
+import { BaseSyntheticEvent, useEffect, useState } from "react";
+import { FieldErrors, SubmitHandler, useForm, UseFormRegister, UseFormReset } from "react-hook-form";
+export interface ProdutoViewProps {
+    data: ProdutosModel[],
+    loading: boolean,
+    produto: ProdutosModel | null | undefined,
+    register: UseFormRegister<ProdutoData>,
+    handleSubmit:(e?: BaseSyntheticEvent<object, any, any> | undefined) => Promise<void>
+    onSubmit:SubmitHandler<ProdutoData>,
+    errors: FieldErrors<ProdutoData>,
+    reset: UseFormReset<ProdutoData>,
+    error: string | null
+}
 export default function useProdutosModel() {
   const [data, setData] = useState<Array<ProdutosModel>>([]);
   const [produto, setProduto] = useState<ProdutosModel | null>();
@@ -28,19 +38,26 @@ export default function useProdutosModel() {
 
   const onSubmit: SubmitHandler<ProdutoData> = async (formData) => {
     try {
-      setLoading(true)
-      setError(null)
-
-      const produtoData:ProdutoData = {
+    
+      const produtoData: ProdutoData = {
         nome: formData.nome,
-        preco: formData.preco
-      }
+        preco:formData.preco,
+      };
 
-      const resp = await fetchData()
-    } catch (error) {
+      await createProduto(produtoData);
       
-    }
-  }
+      
+      await fetchData();
+      
+     reset();
+      setIsSubmitSuccessful(true);
+      
+      setTimeout(() => setIsSubmitSuccessful(false), 3000);
+      
+    } catch (error) {
+      console.error("Erro no onSubmit:", error);
+    }
+  };
 
   useEffect(() => {
     if (isSubmitSuccessful){
@@ -127,5 +144,11 @@ export default function useProdutosModel() {
     data,
     loading,
     produto,
+    register,
+    handleSubmit:handleSubmit(onSubmit),
+    onSubmit,
+    errors,
+    reset,
+    error,
   };
 }
