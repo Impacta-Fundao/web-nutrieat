@@ -11,23 +11,65 @@ export default function useProdutosModel() {
   const [produto, setProduto] = useState<ProdutosModelData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [produtoEditando, setProdutoEditando] =
+    useState<ProdutosModelData | null>(null);
+  const [status, setStatus] = useState<boolean>(false);
+
   const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
+    register: registerCreate,
+    handleSubmit: handleSubmitCreate,
+    reset: resetCreate,
+    formState: { errors: errosCreate },
   } = useForm<ProdutoFormData>();
 
-  const onSubmit: SubmitHandler<ProdutoFormData> = async (formData) => {
+  const {
+    register: registerEdit,
+    handleSubmit: handleSubmitEdit,
+    reset: resetEdit,
+    setValue,
+    formState: { errors: errosEdit },
+  } = useForm<ProdutoFormData>();
+
+  const iniciarEdicao = (produto: ProdutosModelData) => {
+    setProdutoEditando(produto);
+    setValue("nome", produto.nome);
+    setValue("preco", produto.preço);
+  };
+
+  const cancelarEdicao = () => {
+    setProdutoEditando(null);
+    resetEdit();
+  };
+
+  const onSubmitCreate: SubmitHandler<ProdutoFormData> = async (formData) => {
     try {
       await createProduto({
         nome: formData.nome,
         preco: formData.preco,
       });
-      reset();
+      resetCreate();
       await fetchData();
     } catch (error) {
-      console.error("Erro no onSubmit:", error);
+      console.error("Erro no onSubmitCreate");
+    }
+  };
+
+  const onSubmitEdit: SubmitHandler<ProdutoFormData> = async (formData) => {
+    try {
+      if (produtoEditando) {
+        await editProduto(produtoEditando.id.toString(), {
+          nome: formData.nome,
+          preco: formData.preco,
+        });
+        setStatus(true);
+        setTimeout(() => {
+          setStatus(false);
+        }, 3000);
+        cancelarEdicao();
+        await fetchData();
+      }
+    } catch (error) {
+      console.error("Erro no onSubmitEdit:", error);
     }
   };
 
@@ -111,6 +153,40 @@ export default function useProdutosModel() {
     }
   };
 
+  const editProduto = async (id: string, produtoData: ProdutoFormData) => {
+    try {
+      setError(null);
+      setLoading(true);
+
+      const precoNumerico = parseFloat(produtoData.preco);
+
+      const response = await fetch(`/api/produtos/produtos?id=${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome: produtoData.nome,
+          preco: precoNumerico,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro ${response.status}: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      const error = err as Error;
+      setError(error.message);
+      console.error("Erro ao editar produto:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -119,11 +195,19 @@ export default function useProdutosModel() {
     data,
     loading,
     produto,
-    register,
-    handleSubmit,
-    onSubmit,
-    errors,
-    reset,
+    registerCreate,
+    handleSubmitCreate,
+    onSubmitCreate,
+    errosCreate,
+    resetCreate,
+    registerEdit,
+    handleSubmitEdit,
+    onSubmitEdit,
+    errosEdit,
+    resetEdit,
     error,
+    produtoEditando,
+    iniciarEdicao,
+    status,
   };
 }
