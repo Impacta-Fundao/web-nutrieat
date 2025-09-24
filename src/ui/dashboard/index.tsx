@@ -7,24 +7,40 @@ export default function Produtos() {
     data,
     loading,
     produto,
-    register,
-    handleSubmit,
-    onSubmit,
-    errors,
-    reset,
+    errosCreate,
+    errosEdit,
+    handleSubmitCreate,
+    handleSubmitEdit,
+    onSubmitCreate,
+    onSubmitEdit,
+    registerCreate,
+    registerEdit,
+    resetCreate,
+    resetEdit,
     error,
+    iniciarEdicao,
+    produtoEditando,
+    status,
   } = useProdutosModel();
   return (
     <ProdutosView
+      status={status}
+      iniciarEdicao={iniciarEdicao}
+      produtoEditando={produtoEditando}
       data={data}
       error={error}
-      errors={errors}
-      handleSubmit={handleSubmit}
-      onSubmit={onSubmit}
+      errosCreate={errosCreate}
+      handleSubmitCreate={handleSubmitCreate}
+      onSubmitCreate={onSubmitCreate}
       produto={produto}
-      register={register}
-      reset={reset}
+      registerCreate={registerCreate}
+      resetCreate={resetCreate}
       loading={loading}
+      errosEdit={errosEdit}
+      handleSubmitEdit={handleSubmitEdit}
+      onSubmitEdit={onSubmitEdit}
+      registerEdit={registerEdit}
+      resetEdit={resetEdit}
     />
   );
 }

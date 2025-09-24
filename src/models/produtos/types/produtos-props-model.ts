@@ -29,10 +29,18 @@ export interface ProdutoViewProps {
   data: ProdutosModelData[];
   loading: boolean;
   produto: ProdutosModelData | null | undefined;
-  register: UseFormRegister<ProdutoFormData>;
-  handleSubmit: UseFormHandleSubmit<ProdutoFormData, ProdutoFormData>;
-  onSubmit: SubmitHandler<ProdutoFormData>;
-  errors: FieldErrors<ProdutoFormData>;
-  reset: UseFormReset<ProdutoFormData>;
+  registerCreate: UseFormRegister<ProdutoFormData>
+  handleSubmitCreate: UseFormHandleSubmit<ProdutoFormData, ProdutoFormData>
+  onSubmitCreate: SubmitHandler<ProdutoFormData>
+  errosCreate: FieldErrors<ProdutoFormData>
+  resetCreate: UseFormReset<ProdutoFormData>
+  registerEdit: UseFormRegister<ProdutoFormData>
+  handleSubmitEdit: UseFormHandleSubmit<ProdutoFormData, ProdutoFormData>
+  onSubmitEdit: SubmitHandler<ProdutoFormData>
+  errosEdit: FieldErrors<ProdutoFormData>
+  resetEdit: UseFormReset<ProdutoFormData>
   error: string | null;
+  produtoEditando: ProdutosModelData | null;
+   iniciarEdicao: (produto: ProdutosModelData) => void
+   status: boolean
 }
