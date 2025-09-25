@@ -1,6 +1,6 @@
 ## Getting Started
 
-Primeiro, rode o comando *npm i* para baixar todas as dependencias da aplicação.
+Primeiro, rode o comando ```npm i``` para baixar todas as dependencias da aplicação.
 
 Depois, rode o servidor de desenvolvimento:
 
