@@ -1,3 +1,4 @@
+import { ProdutoFormData } from "@/models/produtos/types/produtos-props-model";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -118,7 +119,10 @@ export default async function handler(
             "Pelo menos um campo (nome ou preço) deve ser fornecido para atualização",
         });
 
-      const updateData: any = {};
+      const updateData: ProdutoFormData = {
+        nome,
+        preco,
+      };
       if (nome) updateData.nome = nome;
       if (preco !== undefined) updateData.preco = parseFloat(preco);
       const resp = await fetch(`http://localhost:9090/produto/${id}`, {
@@ -144,6 +148,33 @@ export default async function handler(
         message: "Produto atualizado com sucesso",
         data,
       });
+    } catch (error) {
+      const err = error as Error;
+      console.error("Erro no PUT:", err);
+      return res.status(500).json({
+        message: `Erro na atualização: ${err.message}`,
+      });
+    }
+  }
+
+  if (req.method === "DELETE") {
+    try {
+      const { id } = req.query;
+      if (!id) return res.status(400).json({ message: "Error" });
+
+      const resp = await fetch(`http://localhost:9090/produto/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!resp.ok) {
+        const errorText = await resp.text();
+        console.error("Erro da API externa:", errorText);
+        throw new Error(`Erro: ${resp.status} - ${resp.statusText}`);
+      }
+
+      const data = await resp.json();
+      return res.status(200).json({ message: data });
     } catch (error) {
       const err = error as Error;
       console.error("Erro no PUT:", err);

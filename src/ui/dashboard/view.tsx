@@ -1,8 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { ProdutoViewProps } from "@/models/produtos/types/produtos-props-model";
-import { Edit, X } from "lucide-react";
+import { Edit, Trash, X } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export default function ProdutosView({
   data,
@@ -18,6 +29,7 @@ export default function ProdutosView({
   registerEdit,
   iniciarEdicao,
   status,
+  deleteProduto,
 }: ProdutoViewProps) {
   const [isAtive, setIsAtive] = useState<boolean>(false);
 
@@ -124,80 +136,78 @@ export default function ProdutosView({
               </div>
             </motion.div>
           ) : (
+            <div className="bg-white rounded-2xl shadow-xl p-8">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+                Cadastrar Novo Produto
+              </h2>
 
-              <div className="bg-white rounded-2xl shadow-xl p-8">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-                  Cadastrar Novo Produto
-                </h2>
+              {error && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+                  <X /> Erro: {error}
+                </div>
+              )}
+              <form
+                onSubmit={handleSubmitCreate((data) => {
+                  console.log("Form data: ", data);
+                  onSubmitCreate(data);
+                })}
+                className="space-y-6"
+              >
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Nome do Produto *
+                  </label>
+                  <input
+                    {...registerCreate("nome", {
+                      required: "Nome é obrigatório",
+                    })}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    placeholder="Ex: Hamburgão, Doguinho"
+                  />
+                  {errosCreate.nome && (
+                    <p className="mt-2 text-sm text-red-600">
+                      {errosCreate.nome.message}
+                    </p>
+                  )}
+                </div>
 
-                {error && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
-                    <X /> Erro: {error}
-                  </div>
-                )}
-                <form
-                  onSubmit={handleSubmitCreate((data) => {
-                    console.log("Form data: ", data);
-                    onSubmitCreate(data);
-                  })}
-                  className="space-y-6"
-                >
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Nome do Produto *
-                    </label>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Preço *
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-3 text-gray-500">
+                      R$
+                    </span>
                     <input
-                      {...registerCreate("nome", {
-                        required: "Nome é obrigatório",
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      {...registerCreate("preco", {
+                        required: "Preço é obrigatório",
+                        min: {
+                          value: 0.01,
+                          message: "Preço deve ser maior que zero",
+                        },
                       })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                      placeholder="Ex: Hamburgão, Doguinho"
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      placeholder="0.00"
                     />
-                    {errosCreate.nome && (
-                      <p className="mt-2 text-sm text-red-600">
-                        {errosCreate.nome.message}
-                      </p>
-                    )}
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Preço *
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-3 top-3 text-gray-500">
-                        R$
-                      </span>
-                      <input
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        {...registerCreate("preco", {
-                          required: "Preço é obrigatório",
-                          min: {
-                            value: 0.01,
-                            message: "Preço deve ser maior que zero",
-                          },
-                        })}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                        placeholder="0.00"
-                      />
-                    </div>
-                    {errosCreate.preco && (
-                      <p className="mt-2 text-sm text-red-600">
-                        {errosCreate.preco.message}
-                      </p>
-                    )}
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-                  >
-                    {loading ? "Carregando" : "Cadastrar"}
-                  </button>
-                </form>
-              </div>
-         
+                  {errosCreate.preco && (
+                    <p className="mt-2 text-sm text-red-600">
+                      {errosCreate.preco.message}
+                    </p>
+                  )}
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                >
+                  {loading ? "Carregando" : "Cadastrar"}
+                </button>
+              </form>
+            </div>
           )}
 
           <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -251,20 +261,51 @@ export default function ProdutosView({
                             R$ {produto.preço}
                           </p>
                         </div>
-                        <div className="flex gap-1 flex-col">
+                        <div className="flex gap-1 items-center">
                           <div className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
                             ID: {produto.id}
                           </div>
-                          <Button
-                            className="h-2"
-                            variant={"outline"}
-                            onClick={() => {
-                              iniciarEdicao(produto);
-                              setIsAtive(!isAtive);
-                            }}
-                          >
-                            <Edit />
-                          </Button>
+                          <div className="hover:border-slate-400 hover:border hover:rounded-md hover:transition">
+                            <Edit
+                              className="w-5 h-4 m-1"
+                              onClick={() => {
+                                iniciarEdicao(produto);
+                                setIsAtive(!isAtive);
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <AlertDialog>
+                            <AlertDialogTrigger className="hover:border-slate-400 hover:border hover:rounded-md hover:transition">
+                              <Trash className="w-5 h-4 m-1" />
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  Você tem certeza que quer continuar com essa
+                                  ação?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Essa ação apagará esse registro da base de
+                                  dados
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel className="hover:px-5">
+                                  Cancelar
+                                </AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() =>
+                                    deleteProduto(String(produto.id))
+                                  }
+                                  className="bg-[red] hover:px-5"
+                                >
+                                  Continuar
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </div>
                       </div>
                     </div>

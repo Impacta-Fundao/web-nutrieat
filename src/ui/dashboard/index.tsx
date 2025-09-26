@@ -21,9 +21,11 @@ export default function Produtos() {
     iniciarEdicao,
     produtoEditando,
     status,
+    deleteProduto
   } = useProdutosModel();
   return (
     <ProdutosView
+    deleteProduto={deleteProduto}
       status={status}
       iniciarEdicao={iniciarEdicao}
       produtoEditando={produtoEditando}
