@@ -33,7 +33,7 @@ export default function useProdutosModel() {
   const iniciarEdicao = (produto: ProdutosModelData) => {
     setProdutoEditando(produto);
     setValue("nome", produto.nome);
-    setValue("preco", produto.preço);
+    setValue("preco", Number(produto.preço));
   };
 
   const cancelarEdicao = () => {
@@ -126,7 +126,7 @@ export default function useProdutosModel() {
   const createProduto = async (produtoData: ProdutoFormData) => {
     try {
       setError(null);
-      const precoNumerico = parseFloat(produtoData.preco);
+      const precoNumerico = parseFloat(String(produtoData.preco));
 
       const response = await fetch("/api/produtos/produtos", {
         method: "POST",
@@ -158,7 +158,7 @@ export default function useProdutosModel() {
       setError(null);
       setLoading(true);
 
-      const precoNumerico = parseFloat(produtoData.preco);
+      const precoNumerico = parseFloat(String(produtoData.preco));
 
       const response = await fetch(`/api/produtos/produtos?id=${id}`, {
         method: "PUT",
@@ -187,6 +187,33 @@ export default function useProdutosModel() {
     }
   };
 
+  const deleteProduto = async (id: string) => {
+    try {
+      setError(null);
+      setLoading(true);
+
+      const resp = await fetch(`/api/produtos/produtos?id=${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!resp.ok) {
+        throw new Error(`Erro - ${resp.status} : ${resp.statusText}`);
+      }
+
+      const result = await resp.json();
+      return result;
+    } catch (error) {
+      const erro = error as Error;
+      setError(erro.message);
+      console.error("Erro ao Deletar produto:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+      fetchData()
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -195,6 +222,7 @@ export default function useProdutosModel() {
     data,
     loading,
     produto,
+    deleteProduto,
     registerCreate,
     handleSubmitCreate,
     onSubmitCreate,
