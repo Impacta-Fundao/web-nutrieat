@@ -121,13 +121,13 @@ export default function ProdutosView({
                     <button
                       type="button"
                       onClick={() => setIsAtive(!isAtive)}
-                      className="bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                      className="bg-[#48cfad] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#37bc9b] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                     >
                       Voltar
                     </button>
                     <button
                       type="submit"
-                      className="bg-blue-600  text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                      className="bg-[#48cfad]  text-white py-3 px-6 rounded-lg font-medium hover:bg-[#48cfad/90] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                     >
                       {loading ? "Carregando" : "Salvar"}
                     </button>
@@ -202,7 +202,7 @@ export default function ProdutosView({
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                  className="w-full bg-[#48cfad] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#37bc9b] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                 >
                   {loading ? "Carregando" : "Cadastrar"}
                 </button>
@@ -318,7 +318,7 @@ export default function ProdutosView({
         <div className="mt-12 text-center">
           <div className="inline-flex items-center space-x-8 text-gray-600">
             <div>
-              <div className="text-2xl font-bold text-blue-600">
+              <div className="text-2xl font-bold text-[#48cfad]">
                 {data.length}
               </div>
               <div className="text-sm">Total de Produtos</div>

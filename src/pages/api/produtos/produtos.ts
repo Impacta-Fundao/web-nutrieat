@@ -1,7 +1,7 @@
 import { ProdutoFormData } from "@/models/produtos/types/produtos-props-model";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(
+export default async function handlerProduct(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

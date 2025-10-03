@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AppSidebar } from "@/components/ui/app-sidebar";
+import { SideBarProviderState } from "@/store/contexts/sideBarContext";
+import {
+  SidebarProvider as ShadcnSidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,11 +29,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <SideBarProviderState>
+          <ShadcnSidebarProvider>
+            <div className="flex h-screen w-full">
+              <AppSidebar />
+              <div className="w-full">
+                <SidebarTrigger className="absolute" />
+                <main className="flex-1 overflow-auto">{children}</main>
+              </div>
+            </div>
+          </ShadcnSidebarProvider>
+        </SideBarProviderState>
       </body>
     </html>
   );
