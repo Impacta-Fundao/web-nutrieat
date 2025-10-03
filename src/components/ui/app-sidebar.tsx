@@ -20,17 +20,17 @@ export function AppSidebar() {
   const items = [
     {
       title: "Home",
-      url: "/dash",
+      url: "/Home",
       icon: Home,
     },
     {
       title: "Usuários",
-      url: "/",
+      url: "/Clientes",
       icon: User,
     },
     {
       title: "Produtos",
-      url: "/",
+      url: "/Products",
       icon: HamburgerIcon,
     },
     {
