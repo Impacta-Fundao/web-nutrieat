@@ -10,16 +10,20 @@ import {
 import { ClienteModelData } from "@/models/clientes/types/clientes-props-model";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import {useRouter} from "next/navigation"
+import { useRouter } from "next/navigation"
 
 export const columns: ColumnDef<ClienteModelData>[] = [
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
   {
     accessorKey: "cpf",
     header: "CPF",
   },
   {
-    accessorKey: "idade",
-    header: "Idade",
+    accessorKey: "sala",
+    header: "Sala",
   },
   {
     accessorKey: "nome",
