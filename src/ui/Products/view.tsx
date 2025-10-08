@@ -62,7 +62,6 @@ export default function ProdutosView({
                 </h2>
                 <form
                   onSubmit={handleSubmitEdit((data) => {
-                    console.log("Form data: ", data);
                     onSubmitEdit(data);
                     setTimeout(() => {
                       setIsAtive(!isAtive);

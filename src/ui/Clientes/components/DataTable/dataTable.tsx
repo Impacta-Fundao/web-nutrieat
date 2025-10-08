@@ -27,7 +27,7 @@ import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  }
+}
 
 export function DataTable<TData, TValue>({
   columns,
@@ -46,7 +46,7 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
-      
+
     },
   });
 
@@ -65,6 +65,7 @@ export function DataTable<TData, TValue>({
         <div className="overflow-hidden rounded-md border">
           <Table>
             <TableHeader>
+
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
@@ -73,9 +74,9 @@ export function DataTable<TData, TValue>({
                         {header.isPlaceholder
                           ? null
                           : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                       </TableHead>
                     );
                   })}
@@ -84,22 +85,24 @@ export function DataTable<TData, TValue>({
             </TableHeader>
             <TableBody>
               {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
+                table.getRowModel().rows.map((row, i) => (
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
+                        {cell.column.columnDef.header === "ID" ? (i + 1) : 
+                          flexRender(
+                            cell.column.columnDef.cell,
                           cell.getContext()
                         )}
+
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
-              ) : ( 
+              ) : (
                 <TableRow>
                   <TableCell
                     colSpan={columns.length}
