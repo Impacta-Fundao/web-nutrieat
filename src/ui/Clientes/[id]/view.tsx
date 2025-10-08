@@ -46,7 +46,7 @@ export default function PreviewView({ params }: UserPreviewView) {
             </div>
           </div>
 
-          <div className="p-6 grid grid-cols-2">
+          <div className="p-6">
             <div className="gap-6">
               <div className="space-y-4">
                 <h3 className="border-b pb-2 mr-2 text-lg font-semibold text-gray-900">
@@ -61,13 +61,6 @@ export default function PreviewView({ params }: UserPreviewView) {
                   children="Voltar"
                 />
               </div>
-            </div>
-
-            <div className="w-full flex items-end justify-end">
-              <Button
-                className="w-1/2 bg-[#48cfad] hover:bg-[#37bc9b]"
-                children="Cadastrar??"
-              />
             </div>
           </div>
         </div>

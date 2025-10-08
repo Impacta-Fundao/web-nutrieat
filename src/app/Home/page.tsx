@@ -1,10 +1,8 @@
+
 import WorkInProgress from "@/components/ui/animation/work-in-progress";
+import HomePage from "@/ui/home";
 
 export default function Home() {
-  return (
-    <div className="flex flex-col justify-between items-center gap-5 p-3">
-     
-      <WorkInProgress />
-    </div>
-  );
+  
+  return <WorkInProgress />;
 }

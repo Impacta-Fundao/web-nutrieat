@@ -10,12 +10,12 @@ import {
 import { ClienteModelData } from "@/models/clientes/types/clientes-props-model";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 
 export const columns: ColumnDef<ClienteModelData>[] = [
   {
     accessorKey: "id",
-    header: "ID",
+    header: "Ordem",
   },
   {
     accessorKey: "cpf",
@@ -33,7 +33,7 @@ export const columns: ColumnDef<ClienteModelData>[] = [
     id: "actions",
     cell: ({ row }) => {
       const user = row.original;
-      const router = useRouter()
+      const router = useRouter();
 
       return (
         <DropdownMenu>
@@ -51,7 +51,11 @@ export const columns: ColumnDef<ClienteModelData>[] = [
               Copiar CPF do Cliente
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => router.push(`/Clientes/${user.id}`)}>Ver dados do cliente</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => router.push(`/Clientes/${user.id}`)}
+            >
+              Ver dados do cliente
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
