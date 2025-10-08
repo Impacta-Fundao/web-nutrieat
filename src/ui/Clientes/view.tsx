@@ -7,5 +7,6 @@ export default function ClientesView({
   columns,
   loading,
 }: ClientesViewProps) {
+
   return loading ? <Loading /> : <DataTable columns={columns} data={user} />;
 }

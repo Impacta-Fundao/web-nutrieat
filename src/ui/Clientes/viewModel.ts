@@ -1,5 +1,4 @@
 import { ClienteModelData } from "@/models/clientes/types/clientes-props-model";
-import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 
 export default function useClienteModel() {
@@ -15,10 +14,7 @@ export default function useClienteModel() {
       if (!resp.ok) {
         throw new Error(`Error: ${resp.status}`);
       }
-
       const result = await resp.json();
-      console.log(resp.url)
-
       setUser(result.data.data);
     } catch (error) {
       const err = error as Error;
