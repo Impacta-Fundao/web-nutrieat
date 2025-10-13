@@ -34,7 +34,7 @@ export default function ProdutosView({
   const [isAtive, setIsAtive] = useState<boolean>(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen max-h-1/2 bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -219,99 +219,103 @@ export default function ProdutosView({
                 {data.length} itens
               </span>
             </div>
-            {loading ? (
-              <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="h-20 bg-gray-200 rounded-lg"></div>
-                  </div>
-                ))}
-              </div>
-            ) : error ? (
-              <div className="text-center py-12">
-                <div className="text-red-500 text-6xl mb-4">⚠️</div>
-                <p className="text-gray-600 mb-4">Erro ao carregar produtos</p>
-                <p className="text-sm text-gray-500">{error}</p>
-              </div>
-            ) : data.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-gray-400 text-6xl mb-4">📦</div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  Nenhum produto cadastrado
-                </h3>
-                <p className="text-gray-500">
-                  Comece cadastrando seu primeiro produto!
-                </p>
-              </div>
-            ) : (
-              <div>
-                <div className="space-y-2">
-                  {data.map((produto) => (
-                    <div
-                      key={produto.id}
-                      className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-200"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-gray-900 text-lg">
-                            {produto.nome}
-                          </h3>
-                          <p className="text-2xl font-bold text-green-600 mt-1">
-                            R$ {produto.preço}
-                          </p>
-                        </div>
-                        <div className="flex gap-1 items-center">
-                          <div className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
-                            ID: {produto.id}
-                          </div>
-                          <div className="hover:border-slate-400 hover:border hover:rounded-md hover:transition">
-                            <Edit
-                              className="w-5 h-4 m-1"
-                              onClick={() => {
-                                iniciarEdicao(produto);
-                                setIsAtive(!isAtive);
-                              }}
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <AlertDialog>
-                            <AlertDialogTrigger className="hover:border-slate-400 hover:border hover:rounded-md hover:transition">
-                              <Trash className="w-5 h-4 m-1" />
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                  Você tem certeza que quer continuar com essa
-                                  ação?
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  Essa ação apagará esse registro da base de
-                                  dados
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel className="hover:px-5">
-                                  Cancelar
-                                </AlertDialogCancel>
-                                <AlertDialogAction
-                                  onClick={() =>
-                                    deleteProduto(String(produto.id))
-                                  }
-                                  className="bg-[red] hover:px-5"
-                                >
-                                  Continuar
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        </div>
-                      </div>
+            <div className="max-h-96 overflow-y-auto p-3">
+              {loading ? (
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="h-20 bg-gray-200 rounded-lg"></div>
                     </div>
                   ))}
                 </div>
-              </div>
-            )}
+              ) : error ? (
+                <div className="text-center py-12">
+                  <div className="text-red-500 text-6xl mb-4">⚠️</div>
+                  <p className="text-gray-600 mb-4">
+                    Erro ao carregar produtos
+                  </p>
+                  <p className="text-sm text-gray-500">{error}</p>
+                </div>
+              ) : data.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="text-gray-400 text-6xl mb-4">📦</div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                    Nenhum produto cadastrado
+                  </h3>
+                  <p className="text-gray-500">
+                    Comece cadastrando seu primeiro produto!
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <div className="space-y-2">
+                    {data.map((produto) => (
+                      <div
+                        key={produto.id}
+                        className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-200"
+                      >
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-gray-900 text-lg">
+                              {produto.nome}
+                            </h3>
+                            <p className="text-2xl font-bold text-green-600 mt-1">
+                              R$ {produto.preço}
+                            </p>
+                          </div>
+                          <div className="flex gap-1 items-center">
+                            <div className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
+                              ID: {produto.id}
+                            </div>
+                            <div className="hover:border-slate-400 hover:border hover:rounded-md hover:transition">
+                              <Edit
+                                className="w-5 h-4 m-1"
+                                onClick={() => {
+                                  iniciarEdicao(produto);
+                                  setIsAtive(!isAtive);
+                                }}
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <AlertDialog>
+                              <AlertDialogTrigger className="hover:border-slate-400 hover:border hover:rounded-md hover:transition">
+                                <Trash className="w-5 h-4 m-1" />
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>
+                                    Você tem certeza que quer continuar com essa
+                                    ação?
+                                  </AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Essa ação apagará esse registro da base de
+                                    dados
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel className="hover:px-5">
+                                    Cancelar
+                                  </AlertDialogCancel>
+                                  <AlertDialogAction
+                                    onClick={() =>
+                                      deleteProduto(String(produto.id))
+                                    }
+                                    className="bg-[red] hover:px-5"
+                                  >
+                                    Continuar
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="mt-12 text-center">

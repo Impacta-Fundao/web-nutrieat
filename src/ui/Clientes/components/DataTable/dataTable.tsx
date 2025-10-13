@@ -46,9 +46,18 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
-
     },
   });
+
+  table
+    .getRowModel()
+    .rows.map((v) =>
+      v
+        .getVisibleCells()
+        .map((value, i) =>
+          console.log("Headres: ", value.column.columnDef.header?.toString(), + i)
+        )
+    );
 
   return (
     <>
@@ -65,7 +74,6 @@ export function DataTable<TData, TValue>({
         <div className="overflow-hidden rounded-md border">
           <Table>
             <TableHeader>
-
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
@@ -74,9 +82,9 @@ export function DataTable<TData, TValue>({
                         {header.isPlaceholder
                           ? null
                           : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
                       </TableHead>
                     );
                   })}
@@ -92,12 +100,12 @@ export function DataTable<TData, TValue>({
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
-                        {cell.column.columnDef.header === "ID" ? (i + 1) : 
-                          flexRender(
-                            cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-
+                        {cell.column.columnDef.header === "Ordem"
+                          ? (i + 1)
+                          : flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
                       </TableCell>
                     ))}
                   </TableRow>
