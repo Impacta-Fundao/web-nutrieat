@@ -27,11 +27,13 @@ import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  meta?: any;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  meta
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -42,6 +44,7 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    meta,
 
     state: {
       sorting,
@@ -49,15 +52,7 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  table
-    .getRowModel()
-    .rows.map((v) =>
-      v
-        .getVisibleCells()
-        .map((value, i) =>
-          console.log("Headres: ", value.column.columnDef.header?.toString(), + i)
-        )
-    );
+
 
   return (
     <>
