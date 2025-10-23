@@ -27,4 +27,5 @@ export interface ClientesViewProps {
   fetchData: () => Promise<void>;
   columns: ColumnDef<ClienteModelData>[];
   loading: boolean;
+   deleteClient: (id: string) => Promise<any>
 }

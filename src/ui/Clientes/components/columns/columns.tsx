@@ -31,9 +31,12 @@ export const columns: ColumnDef<ClienteModelData>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       const user = row.original;
       const router = useRouter();
+      const { deleteClient } = table.options.meta as {
+        deleteClient: (id: string) => Promise<any>;
+      };
 
       return (
         <DropdownMenu>
@@ -55,6 +58,9 @@ export const columns: ColumnDef<ClienteModelData>[] = [
               onClick={() => router.push(`/Clientes/${user.id}`)}
             >
               Ver dados do cliente
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => deleteClient(String(user.id))}>
+              Deletar cliente
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
