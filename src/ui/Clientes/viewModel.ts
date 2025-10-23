@@ -25,6 +25,33 @@ export default function useClienteModel() {
     }
   }
 
+  async function deleteClient(id: string) {
+    try {
+      setError(null);
+      setLoading(true);
+      const resp = await fetch(`/api/clientes/cliente-delete?id=${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!resp.ok)
+        throw new Error(`Erro - ${resp.status} : ${resp.statusText}`);
+
+      const result = await resp.json();
+      return result;
+    } catch (error) {
+      const err = error as Error;
+      setError(err.message);
+      console.error("Erro ao deletar produto: ", error);
+      throw error;
+    } finally {
+      fetchData();
+      setInterval(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -33,6 +60,7 @@ export default function useClienteModel() {
     user,
     error,
     fetchData,
+    deleteClient,
     loading,
   };
 }

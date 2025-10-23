@@ -4,6 +4,7 @@ import usePreviewUser from "./viewModel";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import Error from "@/components/ui/animation/error-animation";
 
 interface UserPreviewView {
   params: { id: string };
@@ -16,7 +17,10 @@ export default function PreviewView({ params }: UserPreviewView) {
   if (loading) return <Loading />;
   if (error)
     return (
-      <div className="text-red-500 h-screen w-full">Erro desconhecido</div>
+      <>
+        <div className="flex justify-center mt-[10%] text-5xl">Status - {error}</div>
+        <Error />
+      </>
     );
 
   return (

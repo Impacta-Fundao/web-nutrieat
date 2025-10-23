@@ -6,7 +6,8 @@ export default function ClientesView({
   user,
   columns,
   loading,
-}: ClientesViewProps) {
+  deleteClient
+}: ClientesViewProps & { deleteClient: (id: string) => Promise<any>}) {
 
-  return loading ? <Loading /> : <DataTable columns={columns} data={user} />;
+  return loading ? <Loading /> : <DataTable columns={columns} data={user} meta={{deleteClient}} />;
 }

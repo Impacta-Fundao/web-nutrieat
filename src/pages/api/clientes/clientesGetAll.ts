@@ -6,7 +6,7 @@ export default async function handlerClients(
 ) {
   try {
     if (req.method === "GET") {
-      const resp = await fetch("https://ms-nutrieat.onrender.com/cliente", {
+      const resp = await fetch(`${process.env.ROTA_BASE_RENDER}/cliente`, {
         headers: { "Content-Type": "application/json" },
       });
 
@@ -17,7 +17,6 @@ export default async function handlerClients(
       const data = await resp.json();
       return res.status(200).json({ data });
     }
-
   } catch (err) {
     const error = err as Error;
     console.error("Erro: ", err);
