@@ -23,10 +23,13 @@ export default async function handlerProduct(
             .json({ message: "ID deve ser um número válido" });
         }
 
-        const resp = await fetch(`https://ms-nutrieat.onrender.com/produto/${produtoId}`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
+        const resp = await fetch(
+          `${process.env.ROTA_BASE_RENDER}/produto/${produtoId}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
         if (!resp.ok) {
           if (resp.status === 404) {
@@ -42,7 +45,7 @@ export default async function handlerProduct(
         });
       }
 
-      const resp = await fetch("https://ms-nutrieat.onrender.com/produto", {
+      const resp = await fetch(`${process.env.ROTA_BASE_RENDER}/produto`, {
         headers: { "Content-Type": "application/json" },
       });
 
@@ -77,7 +80,7 @@ export default async function handlerProduct(
         });
       }
 
-      const resp = await fetch("https://ms-nutrieat.onrender.com/produto", {
+      const resp = await fetch(`${process.env.ROTA_BASE_RENDER}/produto`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -125,11 +128,14 @@ export default async function handlerProduct(
       };
       if (nome) updateData.nome = nome;
       if (preco !== undefined) updateData.preco = parseFloat(preco);
-      const resp = await fetch(`https://ms-nutrieat.onrender.com/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updateData),
-      });
+      const resp = await fetch(
+        `${process.env.ROTA_BASE_RENDER}/produto/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updateData),
+        }
+      );
 
       console.log("Status da Api externa (PUT): ", resp.status);
 
@@ -162,10 +168,13 @@ export default async function handlerProduct(
       const { id } = req.query;
       if (!id) return res.status(400).json({ message: "Error" });
 
-      const resp = await fetch(`https://ms-nutrieat.onrender.com/"produto/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
+      const resp = await fetch(
+        `${process.env.ROTA_BASE_RENDER}/produto/${id}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       if (!resp.ok) {
         const errorText = await resp.text();
