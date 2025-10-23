@@ -23,7 +23,7 @@ export default async function handlerProduct(
             .json({ message: "ID deve ser um número válido" });
         }
 
-        const resp = await fetch(`http://localhost:9090/produto/${produtoId}`, {
+        const resp = await fetch(`https://ms-nutrieat.onrender.com/produto/${produtoId}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
@@ -42,7 +42,7 @@ export default async function handlerProduct(
         });
       }
 
-      const resp = await fetch("http://localhost:9090/produto", {
+      const resp = await fetch("https://ms-nutrieat.onrender.com/produto", {
         headers: { "Content-Type": "application/json" },
       });
 
@@ -77,7 +77,7 @@ export default async function handlerProduct(
         });
       }
 
-      const resp = await fetch("http://localhost:9090/produto", {
+      const resp = await fetch("https://ms-nutrieat.onrender.com/produto", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -125,7 +125,7 @@ export default async function handlerProduct(
       };
       if (nome) updateData.nome = nome;
       if (preco !== undefined) updateData.preco = parseFloat(preco);
-      const resp = await fetch(`http://localhost:9090/produto/${id}`, {
+      const resp = await fetch(`https://ms-nutrieat.onrender.com/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updateData),
@@ -162,7 +162,7 @@ export default async function handlerProduct(
       const { id } = req.query;
       if (!id) return res.status(400).json({ message: "Error" });
 
-      const resp = await fetch(`http://localhost:9090/produto/${id}`, {
+      const resp = await fetch(`https://ms-nutrieat.onrender.com/"produto/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });

@@ -11,40 +11,42 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartData = [
-  { month: "Janeiro", lanches: 19 },
-  { month: "Fevereiro", lanches: 305 },
-  { month: "Março", lanches: 237 },
-  { month: "Abril", lanches: 73 },
-  { month: "Maio", lanches: 209 },
-  { month: "Junho", lanches: 214 },
-  { month: "Julho", lanches: 45 },
-  { month: "Agosto", lanches: 45 },
-  { month: "Setembro", lanches: 80 },
-  { month: "Outubro", lanches: 90 },
-  { month: "Novembro", lanches: 214 },
-];
 
 
-
-export function ChartComponent({ config }: { config: ChartConfig }) {
+export function ChartComponent({
+  config,
+  dataKeyTitle,
+  dataKeyContent,
+  tickLine,
+  tickMargin,
+  axisLine,
+  data,
+}: {
+  config: ChartConfig;
+  dataKeyTitle: string;
+  dataKeyContent: string;
+  tickLine: boolean;
+  tickMargin: number;
+  axisLine: boolean;
+  data: any;
+}) {
   return (
     <ChartContainer
       config={config}
       className="min-h-[200px] w-full border mt-5"
     >
-      <BarChart accessibilityLayer data={chartData}>
+      <BarChart accessibilityLayer data={data}>
         <CartesianGrid vertical />
         <XAxis
-          dataKey="month"
-          tickLine={false}
-          tickMargin={10}
-          axisLine={false}
+          dataKey={dataKeyTitle}
+          tickLine={tickLine}
+          tickMargin={tickMargin}
+          axisLine={axisLine}
           tickFormatter={(value) => value.slice(0, 3)}
         />
         <ChartTooltip content={<ChartTooltipContent />} />
         <ChartLegend content={<ChartLegendContent />} />
-        <Bar dataKey="lanches" radius={4} />
+        <Bar dataKey={dataKeyContent} radius={4} />
       </BarChart>
     </ChartContainer>
   );
