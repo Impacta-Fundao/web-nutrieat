@@ -6,7 +6,7 @@ export default async function handlerClients(
 ) {
   try {
     if (req.method === "GET") {
-      const resp = await fetch("http://localhost:9090/cliente", {
+      const resp = await fetch("https://ms-nutrieat.onrender.com/cliente", {
         headers: { "Content-Type": "application/json" },
       });
 
