@@ -8,7 +8,7 @@ Depois, rode o servidor de desenvolvimento:
 npm run dev
 ```
 
-Abra [http://localhost:3000](http://localhost:3000) na porta localhost:3000 mostrará sua aplicação.
+Abra [http://localhost:3000](http://localhost:3000). <br/><br/> Com isso, na porta localhost:3000 mostrará sua aplicação.
 
 Faça suas alterações, novas funciolanidades em uma nova branch;
 
