@@ -12,11 +12,11 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-import { useSideBar } from "@/store/contexts/sideBarContext";
+// import { useSideBar } from "@/store/contexts/sideBarContext";
 
 export function AppSidebar() {
-  const {activeItem,setActiveItem} = useSideBar()
-  
+  // const {activeItem,setActiveItem} = useSideBar()
+
   const items = [
     {
       title: "Home",
@@ -42,12 +42,12 @@ export function AppSidebar() {
       title: "Settings",
       url: "/",
       icon: Settings,
-    }
+    },
   ];
 
-  const handleItemClick = (title: string) => {
-    setActiveItem(activeItem === title ? null : title);
-  };
+  // const handleItemClick = (title: string) => {
+  //   setActiveItem(activeItem === title ? null : title);
+  // };
 
   return (
     <Sidebar collapsible="icon" variant="sidebar" side="left">
@@ -58,16 +58,11 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton 
-                    className={`hover:bg-[#48cfad] transition-colors duration-200 ${
-                      activeItem === item.title && "bg-[#48cfad]"
-                    }`}
+                  <SidebarMenuButton
+                    className={`hover:bg-[#48cfad] transition-colors duration-200 `}
                     asChild
                   >
-                    <a
-                      onClick={() => handleItemClick(item.title)}
-                      href={item.url}
-                    >
+                    <a href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
                     </a>
