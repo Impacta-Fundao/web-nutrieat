@@ -6,7 +6,7 @@ export default async function handlerClient(
 ) {
   try {
     const { id } = req.query;
-    const resp = await fetch(`${process.env.ROTA_BASE_RENDER}/cliente/${id}`, {
+    const resp = await fetch(`${process.env.ROTA_BASE_RENDER || 'http://localhost:9090'}/cliente/${id}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

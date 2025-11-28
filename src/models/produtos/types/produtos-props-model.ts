@@ -9,7 +9,7 @@ import {
 export interface ProdutosModelData {
   id: number;
   nome: string;
-  preço: string;
+  preco: string;
 }
 
 export interface ApiResponse {
@@ -22,7 +22,7 @@ export interface ApiResponseId {
 
 export interface ProdutoFormData {
   nome: string;
-  preco: number;
+  preco: string;
 }
 
 export interface ProdutoViewProps {

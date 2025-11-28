@@ -6,7 +6,7 @@ export default async function handlerClients(
 ) {
   try {
     if (req.method === "GET") {
-      const resp = await fetch(`${process.env.ROTA_BASE_RENDER}/cliente`, {
+      const resp = await fetch(`${process.env.ROTA_BASE_RENDER || 'http://localhost:9090'}/cliente`, {
         headers: { "Content-Type": "application/json" },
       });
 

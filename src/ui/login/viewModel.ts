@@ -1,38 +1,100 @@
-import { useForm } from 'react-hook-form';
-import { FormsData } from './components/forms-props-model';
-import { useState } from 'react';
+import { useForm } from "react-hook-form";
+import {
+  FormsDataLogin,
+  FormsRegisterAdmin,
+  FormsRegisterRaw,
+} from "@/models/admin/types/admin-props-model";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function useRegisterFormsModel() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [status, setStatus] = useState<boolean>(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    setStatus(false);
+  }, [isLogin]);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormsData>();
+  } = useForm<FormsRegisterAdmin>();
+  const {
+    register: registerLogin,
+    handleSubmit: handleSubmitLogin,
+    formState: { errors: errorsLogin },
+  } = useForm<FormsDataLogin>();
 
-  function onSubmit(data: FormsData) {
+  const postAdmin = async (formsData: FormsRegisterAdmin) => {
+    const resp = await fetch("/api/adms/post", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formsData),
+    });
+    setStatus(true);
+    const data = await resp.json();
+    if (!resp.ok) {
+      console.error(data);
+    }
+
+    return data;
+  };
+
+  const authLogin = async (formsData: FormsDataLogin) => {
+    const resp = await fetch("/api/adms/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formsData),
+    });
+    setStatus(true);
+    const data = await resp.json();
+    localStorage.setItem("id_admin", String(data.data.id));
+    if (!resp.ok) {
+      console.error(data);
+      return;
+    }
+
+    return data;
+  };
+
+  async function onSubmitCreate(data: FormsRegisterAdmin) {
+    if (!data) {
+      console.error("Error");
+      return;
+    }
+    await postAdmin(data);
+   
+    return data;
+  }
+  async function onSubmitLogin(data: FormsDataLogin) {
     try {
-      setLoading(true);
       if (!data) {
-        console.error('Error');
-        setLoading(false);
+        console.error("Error");
         return;
       }
-      console.log(data);
+      const result = await authLogin(data);
+      if (!result) {
+        return;
+      }
+      router.push("/Products");
       return data;
-    } catch (error) {
-      const err = error as Error;
-      throw new Error(`Error: ${err.message} - ${err.cause}`);
-    } finally {
-      setLoading(false);
-    }
+    } catch (error) {}
   }
 
   return {
-    register,
-    handleSubmit,
+    register, // register
+    handleSubmit, // register
     errors,
-    onSubmit,
+    onSubmitCreate, // register
     loading,
+    isLogin,
+    setIsLogin,
+    registerLogin, // login
+    handleSubmitLogin, // login
+    errorsLogin,
+    status,
+    onSubmitLogin, // login
   };
 }

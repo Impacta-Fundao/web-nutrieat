@@ -5,20 +5,35 @@ export default function LoginView({
   errors,
   handleSubmit,
   loading,
-  onSubmit,
+  onSubmitCreate,
   register,
+  isLogin,
+  setIsLogin,
+  errorsLogin,
+  handleSubmitLogin,
+  registerLogin,
+  status,
+  onSubmitLogin,
 }: FormsViewProps) {
   return (
-    <div className="flex h-screen items-center ">
+    <div className="flex h-screen items-center">
       <FormsComponent
+        onSubmitLogin={onSubmitLogin}
+        status={status}
+        errorsLogin={errorsLogin}
+        handleSubmitLogin={handleSubmitLogin}
+        registerLogin={registerLogin}
+        className="p-3"
+        isLogin={isLogin}
+        setIsLogin={setIsLogin}
         errors={errors}
         loading={loading}
-        onSubmitHandler={onSubmit}
+        onSubmitHandler={onSubmitCreate}
         register={register}
         handleSubmit={handleSubmit}
-        titleChildren="Faça o Login"
-        childrenButtonBack="Cadastrar"
-        childrenButtonGo="Entrar"
+        titleChildren={isLogin ? "Faça o Login" : "Faça o Cadastro"}
+        childrenButtonBack={isLogin ? "Cadastrar" : "Login"}
+        childrenButtonGo={isLogin ? "Entrar" : "Cadastrar"}
       />
     </div>
   );

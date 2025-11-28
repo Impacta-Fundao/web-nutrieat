@@ -24,7 +24,7 @@ export default async function handlerProduct(
         }
 
         const resp = await fetch(
-          `${process.env.ROTA_BASE_RENDER}/produto/${produtoId}`,
+          `${process.env.ROTA_BASE_RENDER || 'http://localhost:9090'}/produto/${produtoId}`,
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -127,7 +127,7 @@ export default async function handlerProduct(
         preco,
       };
       if (nome) updateData.nome = nome;
-      if (preco !== undefined) updateData.preco = parseFloat(preco);
+      if (preco !== undefined) updateData.preco = (preco);
       const resp = await fetch(
         `${process.env.ROTA_BASE_RENDER}/produto/${id}`,
         {

@@ -7,7 +7,7 @@ export default async function handlerClient(
   try {
     const { id } = req.query;
     if (!id) return res.status(400).json({ message: "Error, id not found" });
-    const resp = await fetch(`${process.env.ROTA_BASE_RENDER}/cliente/${id}`, {
+    const resp = await fetch(`${process.env.ROTA_BASE_RENDER || 'http://localhost:9090'}/cliente/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });

@@ -33,7 +33,7 @@ export default function useProdutosModel() {
   const iniciarEdicao = (produto: ProdutosModelData) => {
     setProdutoEditando(produto);
     setValue("nome", produto.nome);
-    setValue("preco", Number(produto.preço));
+    setValue("preco", (produto.preco));
   };
 
   const cancelarEdicao = () => {
@@ -86,14 +86,8 @@ export default function useProdutosModel() {
       }
 
       const result: ApiResponse = await response.json();
-      const dadosConvertido = result.data.data.map((item: any) => ({
-        ...item,
-        preco:
-          typeof item.preço === "string"
-            ? parseFloat(item.preço)
-            : item.preço || 0,
-      }));
-      setData(dadosConvertido);
+
+      setData(result.data.data);
     } catch (err) {
       const error = err as Error;
       setLoading(false);

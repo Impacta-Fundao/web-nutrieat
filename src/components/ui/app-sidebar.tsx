@@ -1,5 +1,12 @@
 "use client";
-import { Home, Search, Settings, User, HamburgerIcon } from "lucide-react";
+import {
+  Home,
+  Search,
+  Settings,
+  User,
+  HamburgerIcon,
+  UserCheckIcon,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -18,11 +25,11 @@ export function AppSidebar() {
   // const {activeItem,setActiveItem} = useSideBar()
 
   const items = [
-    {
-      title: "Home",
-      url: "/Home",
-      icon: Home,
-    },
+    // {
+    //   title: "Home",
+    //   url: "/Home",
+    //   icon: Home,
+    // },
     {
       title: "Usuários",
       url: "/Clientes",
@@ -34,15 +41,20 @@ export function AppSidebar() {
       icon: HamburgerIcon,
     },
     {
-      title: "Search",
-      url: "/",
-      icon: Search,
+      title: "Perfil",
+      url: "/Profile",
+      icon: UserCheckIcon,
     },
-    {
-      title: "Settings",
-      url: "/",
-      icon: Settings,
-    },
+    // {
+    //   title: "Search",
+    //   url: "/",
+    //   icon: Search,
+    // },
+    // {
+    //   title: "Settings",
+    //   url: "/",
+    //   icon: Settings,
+    // },
   ];
 
   // const handleItemClick = (title: string) => {
