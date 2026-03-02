@@ -58,6 +58,7 @@ export default async function handlerProduct(
       }
 
       const data = await resp.json();
+      
       return res.status(200).json({ data });
     } catch (error) {
       const err = error as Error;
@@ -127,7 +128,7 @@ export default async function handlerProduct(
         preco,
       };
       if (nome) updateData.nome = nome;
-      if (preco !== undefined) updateData.preco = parseFloat(preco);
+      if (preco !== undefined) updateData.preco = preco;
       const resp = await fetch(
         `${process.env.ROTA_BASE_RENDER}/produto/${id}`,
         {

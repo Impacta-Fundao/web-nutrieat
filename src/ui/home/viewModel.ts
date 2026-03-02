@@ -1,4 +1,6 @@
 import { ChartConfig } from "@/components/ui/chart";
+import { VendaItem, VendaResponse } from "@/pages/api/vendas/vendas-year-month";
+import { useEffect, useState } from "react";
 
 export type data = {
   key: string;
@@ -6,6 +8,30 @@ export type data = {
 };
 
 export default function useHomeModel() {
+  const [dataVendas, setDataVendas] = useState<VendaResponse>();
+  const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function fetchData(year: number) {
+    try {
+      setLoading(true);
+      const resp = await fetch(`/api/vendas/vendas-year-month?year=${year}`, {
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!resp.ok) {
+        setLoading(false);
+        throw new Error(`Erro na requisição: ${resp.status}`);
+      }
+      const result: VendaResponse = await resp.json();
+      setDataVendas(result);
+    } catch (error) {
+      const err = error as Error;
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
   const chartConfig = {
     lanches: {
       label: "Lanches",
@@ -13,24 +39,23 @@ export default function useHomeModel() {
     },
   } satisfies ChartConfig;
 
-  const chartData: data[] = [
-    { key: "Janeiro", value: 19 },
-    { key: "Fevereiro", value: 305 },
-    { key: "Março", value: 237 },
-    { key: "Abril", value: 73 },
-    { key: "Maio", value: 209 },
-    { key: "Junho", value: 214 },
-    { key: "Julho", value: 45 },
-    { key: "Agosto", value: 45 },
-    { key: "Setembro", value: 80 },
-    { key: "Outubro", value: 90 },
-    { key: "Novembro", value: 214 },
-  ];
+  const chartData: VendaItem[] | undefined = dataVendas?.meses;
+
+  const select = [2023, 2024, 2025, 2026];
+
+  useEffect(() => {
+    fetchData(year);
+  }, [year]);
 
   return {
     chartConfig,
     chartData,
-    dataKeyTitle: "key",
-    dataKeyContent: "value",
+    dataKeyTitle: "mes_nome",
+    dataKeyContent: "quantidade_vendas",
+    dataVendas,
+    select,
+    year,
+    setYear,
+    loading
   };
 }
