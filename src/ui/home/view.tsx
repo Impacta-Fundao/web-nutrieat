@@ -95,7 +95,6 @@ export default function HomeView({
     }
   };
 
-  if (loading) return <Loading/>
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
       <main className="container mx-auto px-4 py-8 lg:px-6 xl:px-8">
@@ -202,7 +201,7 @@ export default function HomeView({
                 </p>
               </div>
               <div className="p-4 sm:p-6">
-                <ChartComponent
+                { loading ? <Loading/> : <ChartComponent
                   config={chartConfig}
                   dataKeyTitle={dataKeyTitle}
                   dataKeyContent={dataKeyContent}
@@ -211,6 +210,7 @@ export default function HomeView({
                   axisLine={axisLine}
                   data={data}
                 />
+                }
               </div>
             </div>
           </div>
