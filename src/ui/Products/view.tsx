@@ -260,7 +260,7 @@ export default function ProdutosView({
                               {produto.nome}
                             </h3>
                             <p className="text-2xl font-bold text-green-600 mt-1">
-                              R$ {produto.preço}
+                              {produto.preco}
                             </p>
                           </div>
                           <div className="flex gap-1 items-center">
