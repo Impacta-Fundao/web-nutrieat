@@ -4,30 +4,44 @@ import useHomeModel from "./viewModel";
 
 export default function HomePage() {
   const {
-    chartConfig,
-    chartData,
-    dataKeyContent,
-    dataKeyTitle,
+    chartConfigVendas,
+    chartConfigProducts,
+    chartDataProducts,
+    chartDataPurchases,
+    dataKeyContentVendas,
+    dataKeyTitleVendas,
     dataVendas,
     select,
-    setYear,
-    year,
+    setYearProduct,
+    setYearVenda,
+    yearProduct,
+    yearVenda,
     loading,
+    dataContentProsucts,
+    dataTitleProducts,
+    productVendas,
   } = useHomeModel();
   return (
     <HomeView
       loading={loading}
-      setYear={setYear}
-      year={year}
+      setYearVenda={setYearVenda}
+      yearVenda={yearVenda}
+      yearProduct={yearProduct}
+      setYearProduct={setYearProduct}
       select={select}
       dataVendas={dataVendas}
-      chartConfig={chartConfig}
-      data={chartData}
+      chartConfigVendas={chartConfigVendas}
+      chartConfigProducts={chartConfigProducts}
       axisLine
-      dataKeyContent={dataKeyContent}
-      dataKeyTitle={dataKeyTitle}
+      dataKeyContentPurchases={dataKeyContentVendas}
+      dataKeyTitlePurchases={dataKeyTitleVendas}
       tickLine
       tickMargin={10}
+      dataKeyContentProducts={dataContentProsucts}
+      dataKeyTitleProducts={dataTitleProducts}
+      productVendas={productVendas}
+      dataChartVendas={chartDataPurchases}
+      dataChartProducts={chartDataProducts}
     />
   );
 }

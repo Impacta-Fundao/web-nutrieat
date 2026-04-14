@@ -21,6 +21,7 @@ export function ChartComponent({
   tickMargin,
   axisLine,
   data,
+  tooltipLabelKey,
 }: {
   config: ChartConfig;
   dataKeyTitle: string;
@@ -29,6 +30,7 @@ export function ChartComponent({
   tickMargin: number;
   axisLine: boolean;
   data: any;
+  tooltipLabelKey?: string;
 }) {
   return (
     <ChartContainer
@@ -44,7 +46,18 @@ export function ChartComponent({
           axisLine={axisLine}
           tickFormatter={(value) => value.slice(0, 3)}
         />
-        <ChartTooltip content={<ChartTooltipContent />} />
+        <ChartTooltip
+          content={
+            <ChartTooltipContent
+              labelFormatter={
+                tooltipLabelKey
+                  ? (_, payload) =>
+                      payload?.[0]?.payload?.[tooltipLabelKey] ?? ""
+                  : undefined
+              }
+            />
+          }
+        />
         <ChartLegend content={<ChartLegendContent />} />
         <Bar dataKey={dataKeyContent} radius={4} />
       </BarChart>
