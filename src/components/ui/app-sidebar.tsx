@@ -1,5 +1,12 @@
 "use client";
-import { Home, Search, Settings, User, HamburgerIcon } from "lucide-react";
+import {
+  Home,
+  Search,
+  Settings,
+  User,
+  HamburgerIcon,
+  ChartColumnIncreasing,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -32,6 +39,11 @@ export function AppSidebar() {
       title: "Produtos",
       url: "/Products",
       icon: HamburgerIcon,
+    },
+    {
+      title: "Relatorios",
+      url: "/Relatorios",
+      icon: ChartColumnIncreasing,
     },
     {
       title: "Search",
