@@ -1,7 +1,15 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Home, Search, Settings, User, HamburgerIcon, LogOut } from "lucide-react";
+import {
+  Home,
+  Search,
+  Settings,
+  User,
+  HamburgerIcon,
+  ChartColumnIncreasing,
+  LogOut,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -36,6 +44,11 @@ export function AppSidebar() {
       title: "Produtos",
       url: "/Products",
       icon: HamburgerIcon,
+    },
+    {
+      title: "Relatorios",
+      url: "/Relatorios",
+      icon: ChartColumnIncreasing,
     },
     {
       title: "Search",

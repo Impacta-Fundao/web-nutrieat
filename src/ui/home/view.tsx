@@ -19,35 +19,57 @@ import {
   Filter,
 } from "lucide-react";
 import Loading from "@/components/ui/animation/loading";
+import { ProductsData, ProductsItem } from "@/pages/api/vendas/vendas-quantity-month";
 
 export interface HomeViewProps {
-  chartConfig: ChartConfig;
-  dataKeyTitle: string;
-  dataKeyContent: string;
+  chartConfigVendas: ChartConfig;
+  chartConfigProducts: ChartConfig;
+  dataChartVendas: VendaItem[] | undefined;
+  dataChartProducts: ProductsItem[] | undefined;
+
+
+  dataKeyTitlePurchases: string;
+  dataKeyContentPurchases: string;
+  dataKeyTitleProducts: string;
+  dataKeyContentProducts: string;
+
   tickLine: boolean;
   tickMargin: number;
   axisLine: boolean;
-  data: VendaItem[] | undefined;
+
   dataVendas: VendaResponse | undefined;
+  productVendas: ProductsData | undefined;
+
+
   select: number[];
-  year: number;
-  setYear: Dispatch<SetStateAction<number>>;
+  yearProduct: number;
+  yearVenda: number;
+  setYearVenda: Dispatch<SetStateAction<number>>;
+  setYearProduct: Dispatch<SetStateAction<number>>;
+  
   loading: boolean;
 }
 
 export default function HomeView({
   axisLine,
-  chartConfig,
-  data,
-  dataKeyContent,
-  dataKeyTitle,
+  chartConfigVendas,
+  dataChartVendas,
+  dataChartProducts,
+  dataKeyContentPurchases,
+  dataKeyTitlePurchases,
   tickLine,
   tickMargin,
   dataVendas,
   select,
-  setYear,
-  year,
+  setYearVenda: setYear,
+  yearVenda,
   loading,
+  chartConfigProducts,
+  dataKeyContentProducts,
+  dataKeyTitleProducts,
+  productVendas,
+  setYearProduct,
+  yearProduct,
 }: HomeViewProps) {
   const totalVendas =
     dataVendas?.meses?.reduce(
@@ -193,7 +215,7 @@ export default function HomeView({
             <div className="overflow-hidden rounded-2xl bg-white shadow-xl transition-all hover:shadow-2xl dark:bg-slate-800">
               <div className="border-b border-slate-200 bg-slate-50 px-6 py-4 dark:border-slate-700 dark:bg-slate-800/50">
                 <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
-                  Evolução de Vendas - {year}
+                  Evolução de Vendas - {yearVenda}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   Quantidade de vendas por mês
@@ -204,13 +226,13 @@ export default function HomeView({
                   <Loading />
                 ) : (
                   <ChartComponent
-                    config={chartConfig}
-                    dataKeyTitle={dataKeyTitle}
-                    dataKeyContent={dataKeyContent}
+                    config={chartConfigVendas}
+                    dataKeyTitle={dataKeyTitlePurchases}
+                    dataKeyContent={dataKeyContentPurchases}
                     tickLine={tickLine}
                     tickMargin={tickMargin}
                     axisLine={axisLine}
-                    data={data}
+                    data={dataChartVendas}
                   />
                 )}
               </div>
@@ -230,7 +252,7 @@ export default function HomeView({
                 <div className="space-y-4">
                   <div className="relative">
                     <Select
-                      value={String(year)}
+                      value={String(yearVenda)}
                       onValueChange={(value) => setYear(Number(value))}
                     >
                       <SelectTrigger className="w-full border-2 border-slate-200 bg-white py-6 text-base dark:border-slate-700 dark:bg-slate-900">
@@ -298,16 +320,99 @@ export default function HomeView({
             </div>
           </div>
         </div>
-        <div>
-          <ChartComponent
-            config={chartConfig}
-            dataKeyTitle={dataKeyTitle}
-            dataKeyContent={dataKeyContent}
-            tickLine={tickLine}
-            tickMargin={tickMargin}
-            axisLine={axisLine}
-            data={data}
-          />
+        <div className="mt-6 flex flex-col gap-6 lg:flex-row lg:items-start">
+          <div className="flex-1">
+            <div className="overflow-hidden rounded-2xl bg-white shadow-xl transition-all hover:shadow-2xl dark:bg-slate-800">
+              <div className="border-b border-slate-200 bg-slate-50 px-6 py-4 dark:border-slate-700 dark:bg-slate-800/50">
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
+                  Produto Mais Vendido por Mês - {yearProduct}
+                </h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Produto com maior quantidade vendida em cada mês
+                </p>
+              </div>
+              <div className="p-4 sm:p-6">
+                {loading ? (
+                  <Loading />
+                ) : (
+                  <ChartComponent
+                    config={chartConfigProducts}
+                    dataKeyTitle={dataKeyTitleProducts}
+                    dataKeyContent={dataKeyContentProducts}
+                    tickLine={tickLine}
+                    tickMargin={tickMargin}
+                    axisLine={axisLine}
+                    data={dataChartProducts}
+                    tooltipLabelKey="nome_produto"
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full lg:w-80">
+            <div className="sticky top-6 space-y-4">
+              <div className="rounded-2xl bg-white p-6 shadow-xl transition-all hover:shadow-2xl dark:bg-slate-800">
+                <div className="mb-4 flex items-center gap-2">
+                  <Calendar className="h-5 w-5 text-slate-500 dark:text-slate-400" />
+                  <h3 className="font-medium text-slate-900 dark:text-white">
+                    Selecionar Período
+                  </h3>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="relative">
+                    <Select
+                      value={String(yearProduct)}
+                      onValueChange={(value) => setYearProduct(Number(value))}
+                    >
+                      <SelectTrigger className="w-full border-2 border-slate-200 bg-white py-6 text-base dark:border-slate-700 dark:bg-slate-900">
+                        <SelectValue placeholder="Selecione o ano" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {select.map((yearData: number) => (
+                            <SelectItem key={yearData} value={String(yearData)}>
+                              {yearData}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                    <Filter className="h-4 w-4" />
+                    <span>Dados atualizados em tempo real</span>
+                  </div>
+                </div>
+              </div>
+
+              {productVendas?.meses && (
+                <div className="hidden rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-800 lg:block">
+                  <h3 className="mb-4 font-medium text-slate-900 dark:text-white">
+                    Resumo do Ano
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-700">
+                      <span className="text-sm text-slate-600 dark:text-slate-400">
+                        Melhor mês:
+                      </span>
+                      <span className="font-medium text-slate-900 dark:text-white">
+                        {monthTranslate(
+                          productVendas.meses.reduce((max, mes) =>
+                            (mes.total_vendido || 0) > (max.total_vendido || 0)
+                              ? mes
+                              : max,
+                          ).mes_nome,
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </main>
     </div>
