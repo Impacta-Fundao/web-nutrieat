@@ -32,7 +32,7 @@ export interface HomeViewProps {
   select: number[];
   year: number;
   setYear: Dispatch<SetStateAction<number>>;
-  loading: boolean
+  loading: boolean;
 }
 
 export default function HomeView({
@@ -47,9 +47,8 @@ export default function HomeView({
   select,
   setYear,
   year,
-  loading
+  loading,
 }: HomeViewProps) {
-  // Calcular métricas básicas
   const totalVendas =
     dataVendas?.meses?.reduce(
       (acc, mes) => acc + (mes.quantidade_vendas || 0),
@@ -201,16 +200,19 @@ export default function HomeView({
                 </p>
               </div>
               <div className="p-4 sm:p-6">
-                { loading ? <Loading/> : <ChartComponent
-                  config={chartConfig}
-                  dataKeyTitle={dataKeyTitle}
-                  dataKeyContent={dataKeyContent}
-                  tickLine={tickLine}
-                  tickMargin={tickMargin}
-                  axisLine={axisLine}
-                  data={data}
-                />
-                }
+                {loading ? (
+                  <Loading />
+                ) : (
+                  <ChartComponent
+                    config={chartConfig}
+                    dataKeyTitle={dataKeyTitle}
+                    dataKeyContent={dataKeyContent}
+                    tickLine={tickLine}
+                    tickMargin={tickMargin}
+                    axisLine={axisLine}
+                    data={data}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -295,6 +297,17 @@ export default function HomeView({
               )}
             </div>
           </div>
+        </div>
+        <div>
+          <ChartComponent
+            config={chartConfig}
+            dataKeyTitle={dataKeyTitle}
+            dataKeyContent={dataKeyContent}
+            tickLine={tickLine}
+            tickMargin={tickMargin}
+            axisLine={axisLine}
+            data={data}
+          />
         </div>
       </main>
     </div>

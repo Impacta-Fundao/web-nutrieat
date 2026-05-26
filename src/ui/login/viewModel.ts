@@ -1,30 +1,46 @@
-import { useForm } from 'react-hook-form';
-import { FormsData } from './components/forms-props-model';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
 
-export default function useRegisterFormsModel() {
-  const [loading, setLoading] = useState<boolean>(false);
+import {
+  AuthApiErrorResponse,
+  LoginFormData,
+} from '@/models/admin/types/admin-auth-model';
+
+export default function useLoginFormModel() {
+  const router = useRouter();
+  const [serverError, setServerError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<FormsData>();
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    defaultValues: {
+      cpf: '',
+      senha: '',
+    },
+  });
 
-  function onSubmit(data: FormsData) {
+  async function onSubmit(data: LoginFormData) {
     try {
-      setLoading(true);
-      if (!data) {
-        console.error('Error');
-        setLoading(false);
-        return;
+      setServerError(null);
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const payload = (await response.json()) as AuthApiErrorResponse;
+
+      if (!response.ok) {
+        throw new Error(payload.message || 'Não foi possível realizar o login');
       }
-      console.log(data);
-      return data;
+
+      router.push('/Home');
+      router.refresh();
     } catch (error) {
       const err = error as Error;
-      throw new Error(`Error: ${err.message} - ${err.cause}`);
-    } finally {
-      setLoading(false);
+      setServerError(err.message);
     }
   }
 
@@ -33,6 +49,7 @@ export default function useRegisterFormsModel() {
     handleSubmit,
     errors,
     onSubmit,
-    loading,
+    isSubmitting,
+    serverError,
   };
 }

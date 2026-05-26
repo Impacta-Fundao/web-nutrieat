@@ -1,32 +1,39 @@
 import {
+  FieldPath,
   FieldErrors,
+  FieldValues,
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form';
 
-export interface FormsModelProps {
-  register: UseFormRegister<FormsData>;
-  handleSubmit: UseFormHandleSubmit<FormsData, FormsData>;
-  onSubmitHandler: (data: FormsData) => void;
-  errors: FieldErrors<FormsData>;
-  loading: boolean;
+export interface FieldConfig<TFormValues extends FieldValues> {
+  name: FieldPath<TFormValues>;
+  label: string;
+  placeholder: string;
+  type?: 'text' | 'email' | 'password';
+}
+
+export interface FormsModelProps<TFormValues extends FieldValues> {
+  register: UseFormRegister<TFormValues>;
+  handleSubmit: UseFormHandleSubmit<TFormValues, TFormValues>;
+  onSubmitHandler: (data: TFormValues) => Promise<void> | void;
+  errors: FieldErrors<TFormValues>;
+  isSubmitting: boolean;
+  fields: FieldConfig<TFormValues>[];
   className?: string;
-  childrenButtonBack?: string;
-  titleChildren?: string;
-  childrenButtonGo?: string;
+  title: string;
+  description: string;
+  submitLabel: string;
+  footerLabel: string;
+  footerHref: string;
+  serverError: string | null;
 }
 
-export interface FormsData {
-  groupOrUser: string | null;
-  reportId: string | null;
-  pageId: string | null;
-  name: string | null;
-}
-
-export default interface FormsViewProps {
-  register: UseFormRegister<FormsData>;
-  handleSubmit: UseFormHandleSubmit<FormsData, FormsData>;
-  errors: FieldErrors<FormsData>;
-  onSubmit: (data: FormsData) => FormsData | undefined;
-  loading: boolean;
+export interface AuthViewProps<TFormValues extends FieldValues> {
+  register: UseFormRegister<TFormValues>;
+  handleSubmit: UseFormHandleSubmit<TFormValues, TFormValues>;
+  errors: FieldErrors<TFormValues>;
+  onSubmit: (data: TFormValues) => Promise<void> | void;
+  isSubmitting: boolean;
+  serverError: string | null;
 }

@@ -1,5 +1,7 @@
 "use client";
-import { Home, Search, Settings, User, HamburgerIcon } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Home, Search, Settings, User, HamburgerIcon, LogOut } from "lucide-react";
 
 import {
   Sidebar,
@@ -15,6 +17,8 @@ import {
 // import { useSideBar } from "@/store/contexts/sideBarContext";
 
 export function AppSidebar() {
+  const router = useRouter();
+
   // const {activeItem,setActiveItem} = useSideBar()
 
   const items = [
@@ -45,6 +49,16 @@ export function AppSidebar() {
     },
   ];
 
+  async function handleLogout() {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    router.push("/login");
+    router.refresh();
+  }
+
   // const handleItemClick = (title: string) => {
   //   setActiveItem(activeItem === title ? null : title);
   // };
@@ -62,13 +76,22 @@ export function AppSidebar() {
                     className={`hover:bg-[#48cfad] transition-colors duration-200 `}
                     asChild
                   >
-                    <a href={item.url}>
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  className="cursor-pointer text-red-600 transition-colors duration-200 hover:bg-red-50 hover:text-red-700"
+                  onClick={handleLogout}
+                >
+                  <LogOut />
+                  <span>Sair</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

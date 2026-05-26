@@ -1,10 +1,5 @@
-import WorkInProgress from "@/components/ui/animation/work-in-progress";
-import Produtos from "@/ui/Products";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div>
-      <WorkInProgress />
-    </div>
-  );
+  redirect("/Home");
 }

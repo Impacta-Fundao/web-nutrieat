@@ -56,6 +56,6 @@ export default function useHomeModel() {
     select,
     year,
     setYear,
-    loading
+    loading,
   };
 }

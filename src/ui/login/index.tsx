@@ -1,8 +1,8 @@
 'use client'
 import LoginView from "./view";
-import useRegisterFormsModel from "./viewModel";
+import useLoginFormModel from "./viewModel";
 
 export default function LoginPage(){
-    const {errors,handleSubmit,loading,onSubmit,register} = useRegisterFormsModel()
-    return <LoginView errors={errors} handleSubmit={handleSubmit} loading={loading} onSubmit={onSubmit} register={register}/>
+    const {errors,handleSubmit,isSubmitting,onSubmit,register,serverError} = useLoginFormModel()
+    return <LoginView errors={errors} handleSubmit={handleSubmit} isSubmitting={isSubmitting} onSubmit={onSubmit} register={register} serverError={serverError}/>
 }
