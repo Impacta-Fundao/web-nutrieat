@@ -57,7 +57,7 @@ export function AppSidebar() {
     },
     {
       title: "Settings",
-      url: "/",
+      url: "/Settings",
       icon: Settings,
     },
   ];

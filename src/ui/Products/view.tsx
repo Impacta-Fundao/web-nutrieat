@@ -34,13 +34,13 @@ export default function ProdutosView({
   const [isAtive, setIsAtive] = useState<boolean>(false);
 
   return (
-    <div className="min-h-screen max-h-1/2 bg-gray-50 py-8">
+    <div className="min-h-screen max-h-1/2 bg-background py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-foreground mb-4">
             Gerenciamento de Produtos Nutrieat
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-muted-foreground">
             Cadastre e visualize todos os produtos da cantina
           </p>
         </div>
@@ -53,11 +53,11 @@ export default function ProdutosView({
               exit={{ opacity: 0, x: 50 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="bg-white rounded-2xl shadow-xl p-8">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+              <div className="bg-card border border-border rounded-2xl shadow-sm p-8">
+                <h2 className="text-2xl font-semibold text-foreground mb-6">
                   Atualizar Produto
                   {status && (
-                    <p className="text-green-700">Atualizado com sucesso</p>
+                    <p className="text-emerald-600 dark:text-emerald-400">Atualizado com sucesso</p>
                   )}
                 </h2>
                 <form
@@ -70,14 +70,14 @@ export default function ProdutosView({
                   className="space-y-6"
                 >
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-foreground mb-2">
                       Nome do Produto *
                     </label>
                     <input
                       {...registerEdit("nome", {
                         required: "Nome é obrigatório",
                       })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 border border-input bg-background text-foreground rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
                       placeholder="Ex: Hamburgão, Doguinho"
                     />
                     {errosEdit.nome && (
@@ -88,11 +88,11 @@ export default function ProdutosView({
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-foreground mb-2">
                       Preço *
                     </label>
                     <div className="relative">
-                      <span className="absolute left-3 top-3 text-gray-500">
+                      <span className="absolute left-3 top-3 text-muted-foreground">
                         R$
                       </span>
                       <input
@@ -106,7 +106,7 @@ export default function ProdutosView({
                             message: "Preço deve ser maior que zero",
                           },
                         })}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        className="w-full pl-10 pr-4 py-3 border border-input bg-background text-foreground rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
                         placeholder="0.00"
                       />
                     </div>
@@ -120,13 +120,13 @@ export default function ProdutosView({
                     <button
                       type="button"
                       onClick={() => setIsAtive(!isAtive)}
-                      className="bg-[#48cfad] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#37bc9b] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                      className="border border-border bg-background text-foreground py-3 px-6 rounded-lg font-medium hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                     >
                       Voltar
                     </button>
                     <button
                       type="submit"
-                      className="bg-[#48cfad]  text-white py-3 px-6 rounded-lg font-medium hover:bg-[#48cfad/90] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                      className="bg-primary text-primary-foreground py-3 px-6 rounded-lg font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                     >
                       {loading ? "Carregando" : "Salvar"}
                     </button>
@@ -135,13 +135,13 @@ export default function ProdutosView({
               </div>
             </motion.div>
           ) : (
-            <div className="bg-white rounded-2xl shadow-xl p-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+            <div className="bg-card border border-border rounded-2xl shadow-sm p-8">
+              <h2 className="text-2xl font-semibold text-foreground mb-6">
                 Cadastrar Novo Produto
               </h2>
 
               {error && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+                <div className="bg-destructive/10 border border-destructive/30 text-destructive px-4 py-3 rounded-lg mb-6">
                   <X /> Erro: {error}
                 </div>
               )}
@@ -153,14 +153,14 @@ export default function ProdutosView({
                 className="space-y-6"
               >
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Nome do Produto *
                   </label>
                   <input
                     {...registerCreate("nome", {
                       required: "Nome é obrigatório",
                     })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    className="w-full px-4 py-3 border border-input bg-background text-foreground rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
                     placeholder="Ex: Hamburgão, Doguinho"
                   />
                   {errosCreate.nome && (
@@ -171,11 +171,11 @@ export default function ProdutosView({
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Preço *
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-3 text-gray-500">
+                    <span className="absolute left-3 top-3 text-muted-foreground">
                       R$
                     </span>
                     <input
@@ -189,7 +189,7 @@ export default function ProdutosView({
                           message: "Preço deve ser maior que zero",
                         },
                       })}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full pl-10 pr-4 py-3 border border-input bg-background text-foreground rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
                       placeholder="0.00"
                     />
                   </div>
@@ -201,7 +201,7 @@ export default function ProdutosView({
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-[#48cfad] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#37bc9b] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                  className="w-full bg-primary text-primary-foreground py-3 px-6 rounded-lg font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                 >
                   {loading ? "Carregando" : "Cadastrar"}
                 </button>
@@ -209,13 +209,13 @@ export default function ProdutosView({
             </div>
           )}
 
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="bg-card border border-border rounded-2xl shadow-sm p-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-semibold text-gray-800">
+              <h2 className="text-2xl font-semibold text-foreground">
                 Produtos Cadastrados
               </h2>
 
-              <span className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+              <span className="bg-secondary text-secondary-foreground text-sm font-medium px-3 py-1 rounded-full">
                 {data.length} itens
               </span>
             </div>
@@ -224,25 +224,25 @@ export default function ProdutosView({
                 <div className="space-y-4">
                   {[1, 2, 3].map((i) => (
                     <div key={i} className="animate-pulse">
-                      <div className="h-20 bg-gray-200 rounded-lg"></div>
+                      <div className="h-20 bg-muted rounded-lg"></div>
                     </div>
                   ))}
                 </div>
               ) : error ? (
                 <div className="text-center py-12">
                   <div className="text-red-500 text-6xl mb-4">⚠️</div>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-muted-foreground mb-4">
                     Erro ao carregar produtos
                   </p>
-                  <p className="text-sm text-gray-500">{error}</p>
+                  <p className="text-sm text-muted-foreground">{error}</p>
                 </div>
               ) : data.length === 0 ? (
                 <div className="text-center py-12">
-                  <div className="text-gray-400 text-6xl mb-4">📦</div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  <div className="text-muted-foreground text-6xl mb-4">📦</div>
+                  <h3 className="text-lg font-medium text-foreground mb-2">
                     Nenhum produto cadastrado
                   </h3>
-                  <p className="text-gray-500">
+                  <p className="text-muted-foreground">
                     Comece cadastrando seu primeiro produto!
                   </p>
                 </div>
@@ -252,22 +252,22 @@ export default function ProdutosView({
                     {data.map((produto) => (
                       <div
                         key={produto.id}
-                        className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-200"
+                        className="border border-border rounded-lg p-4 bg-background hover:bg-accent/20 transition-colors duration-200"
                       >
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
-                            <h3 className="font-semibold text-gray-900 text-lg">
+                            <h3 className="font-semibold text-foreground text-lg">
                               {produto.nome}
                             </h3>
-                            <p className="text-2xl font-bold text-green-600 mt-1">
+                            <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
                               {produto.preco}
                             </p>
                           </div>
                           <div className="flex gap-1 items-center">
-                            <div className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
+                            <div className="bg-muted text-muted-foreground text-xs font-medium px-2 py-1 rounded border border-border">
                               ID: {produto.id}
                             </div>
-                            <div className="hover:border-slate-400 hover:border hover:rounded-md hover:transition">
+                            <div className="text-muted-foreground hover:text-foreground hover:border-border hover:border hover:rounded-md transition">
                               <Edit
                                 className="w-5 h-4 m-1"
                                 onClick={() => {
@@ -279,7 +279,7 @@ export default function ProdutosView({
                           </div>
                           <div>
                             <AlertDialog>
-                              <AlertDialogTrigger className="hover:border-slate-400 hover:border hover:rounded-md hover:transition">
+                              <AlertDialogTrigger className="text-muted-foreground hover:text-foreground hover:border-border hover:border hover:rounded-md transition">
                                 <Trash className="w-5 h-4 m-1" />
                               </AlertDialogTrigger>
                               <AlertDialogContent>
@@ -301,7 +301,7 @@ export default function ProdutosView({
                                     onClick={() =>
                                       deleteProduto(String(produto.id))
                                     }
-                                    className="bg-[red] hover:px-5"
+                                    className="bg-destructive text-white hover:bg-destructive/90"
                                   >
                                     Continuar
                                   </AlertDialogAction>
@@ -319,9 +319,9 @@ export default function ProdutosView({
           </div>
         </div>
         <div className="mt-12 text-center">
-          <div className="inline-flex items-center space-x-8 text-gray-600">
+          <div className="inline-flex items-center space-x-8 text-muted-foreground">
             <div>
-              <div className="text-2xl font-bold text-[#48cfad]">
+              <div className="text-2xl font-bold text-primary">
                 {data.length}
               </div>
               <div className="text-sm">Total de Produtos</div>

@@ -69,7 +69,7 @@ const FormsComponent = <TFormValues extends FieldValues>({
                   placeholder={field.placeholder}
                   type={field.type ?? 'text'}
                   className={clsx(
-                    'h-12 rounded-xl border-slate-200 bg-white',
+                    'h-12 rounded-xl border-slate-200 bg-white text-black',
                     fieldError && 'border-red-400 focus-visible:ring-red-400',
                   )}
                 />

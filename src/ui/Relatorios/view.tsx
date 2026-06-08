@@ -61,7 +61,11 @@ function formatNumber(value: number): string {
   return value.toLocaleString("pt-BR");
 }
 
-const medalColors = ["text-yellow-500", "text-slate-400", "text-amber-700"];
+const medalColors = [
+  "text-yellow-500",
+  "text-zinc-500 dark:text-zinc-300",
+  "text-amber-700 dark:text-amber-400",
+];
 
 export default function RelatoriosView({
   year,
@@ -79,22 +83,22 @@ export default function RelatoriosView({
 }: RelatoriosViewProps) {
   const trendConfig = {
     up: {
-      icon: <TrendingUp className="h-5 w-5 text-emerald-600" />,
+      icon: <TrendingUp className="h-5 w-5 text-emerald-500" />,
       label: "Alta",
-      valueClass: "text-emerald-600",
-      badgeClass: "bg-emerald-50 text-emerald-700 border-emerald-200",
+      valueClass: "text-emerald-500",
+      badgeClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30",
     },
     down: {
       icon: <TrendingDown className="h-5 w-5 text-red-500" />,
       label: "Queda",
       valueClass: "text-red-500",
-      badgeClass: "bg-red-50 text-red-700 border-red-200",
+      badgeClass: "bg-red-500/10 text-red-700 dark:text-red-300 border-red-500/30",
     },
     stable: {
-      icon: <Minus className="h-5 w-5 text-slate-500" />,
+      icon: <Minus className="h-5 w-5 text-muted-foreground" />,
       label: "Estável",
-      valueClass: "text-slate-600",
-      badgeClass: "bg-slate-50 text-slate-600 border-slate-200",
+      valueClass: "text-muted-foreground",
+      badgeClass: "bg-muted text-muted-foreground border-border",
     },
   };
 
@@ -108,15 +112,15 @@ export default function RelatoriosView({
   const diffSign = comparison.difference > 0 ? "+" : "";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50/60 via-white to-amber-50/40 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background p-4 md:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
 
         {/* Header */}
-        <header className="flex flex-col gap-4 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100 md:flex-row md:items-center md:justify-between">
+        <header className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-teal-700">Nutrieat ADM</p>
-            <h1 className="mt-1 text-2xl font-bold text-slate-900">Relatórios Gerenciais</h1>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary">Nutrieat ADM</p>
+            <h1 className="mt-1 text-2xl font-bold text-foreground">Relatórios Gerenciais</h1>
+            <p className="mt-1 text-sm text-muted-foreground">
               Comparativo mensal e consolidado anual de vendas.
             </p>
           </div>
@@ -147,7 +151,7 @@ export default function RelatoriosView({
               </SelectContent>
             </Select>
 
-            <Button className="bg-teal-700 hover:bg-teal-800 gap-2" onClick={exportToPdf}>
+            <Button className="gap-2" onClick={exportToPdf}>
               <Download className="h-4 w-4" />
               Exportar PDF
             </Button>
@@ -156,7 +160,7 @@ export default function RelatoriosView({
 
         {/* Erro */}
         {error && (
-          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
             Não foi possível carregar os dados: {error}
           </div>
         )}
@@ -165,28 +169,28 @@ export default function RelatoriosView({
 
           {/* KPI Cards */}
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-              <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 {comparison.currentMonthName} — mês atual
               </p>
-              <p className="mt-3 text-4xl font-bold text-slate-900 tabular-nums">
+              <p className="mt-3 text-4xl font-bold text-foreground tabular-nums">
                 {formatNumber(comparison.currentSales)}
               </p>
-              <p className="mt-1 text-sm text-slate-500">unidades vendidas</p>
+              <p className="mt-1 text-sm text-muted-foreground">unidades vendidas</p>
             </div>
 
-            <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-              <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 {comparison.previousMonthName} — mês anterior
               </p>
-              <p className="mt-3 text-4xl font-bold text-slate-900 tabular-nums">
+              <p className="mt-3 text-4xl font-bold text-foreground tabular-nums">
                 {formatNumber(comparison.previousSales)}
               </p>
-              <p className="mt-1 text-sm text-slate-500">unidades vendidas</p>
+              <p className="mt-1 text-sm text-muted-foreground">unidades vendidas</p>
             </div>
 
-            <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-              <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Variação no período
               </p>
               <div className="mt-3 flex items-center gap-2">
@@ -205,22 +209,22 @@ export default function RelatoriosView({
 
           {/* Gráficos */}
           <div className="grid gap-6 lg:grid-cols-2">
-            <article className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+            <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-2">
-                <FileBarChart2 className="h-4 w-4 text-teal-700" />
-                <h2 className="text-sm font-semibold text-slate-800">Comparativo mensal</h2>
+                <FileBarChart2 className="h-4 w-4 text-primary" />
+                <h2 className="text-sm font-semibold text-foreground">Comparativo mensal</h2>
               </div>
               {loading ? (
-                <div className="flex h-[280px] items-center justify-center text-sm text-slate-400">
+                <div className="flex h-[280px] items-center justify-center text-sm text-muted-foreground">
                   Carregando dados...
                 </div>
               ) : (
                 <ChartContainer config={compareChartConfig} className="h-[280px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={compareBars} barSize={48}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                      <XAxis dataKey="periodo" tick={{ fontSize: 12, fill: "#64748b" }} axisLine={false} tickLine={false} />
-                      <YAxis tickFormatter={(v) => formatNumber(v)} tick={{ fontSize: 11, fill: "#94a3b8" }} axisLine={false} tickLine={false} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                      <XAxis dataKey="periodo" tick={{ fontSize: 12, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
+                      <YAxis tickFormatter={(v) => formatNumber(v)} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
                       <ChartTooltip
                         content={<ChartTooltipContent formatter={(v) => [formatNumber(Number(v)), "Vendas"]} />}
                       />
@@ -233,31 +237,31 @@ export default function RelatoriosView({
             </article>
 
             {/* Top Produtos */}
-            <article className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-              <h2 className="mb-4 text-sm font-semibold text-slate-800">Top 5 produtos no ano</h2>
+            <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <h2 className="mb-4 text-sm font-semibold text-foreground">Top 5 produtos no ano</h2>
               {topProducts.length === 0 ? (
-                <p className="text-sm text-slate-400">Sem dados de produtos para o período selecionado.</p>
+                <p className="text-sm text-muted-foreground">Sem dados de produtos para o período selecionado.</p>
               ) : (
                 <div className="space-y-3">
                   {topProducts.map((item, idx) => (
                     <div
                       key={`${item.nome_produto}-${item.mes_nome}`}
-                      className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/60 px-4 py-3"
+                      className="flex items-center justify-between rounded-xl border border-border bg-muted/40 px-4 py-3"
                     >
                       <div className="flex items-center gap-3">
-                        <span className={`text-base ${medalColors[idx] ?? "text-slate-400"}`}>
-                          {idx < 3 ? <Medal className="h-4 w-4" /> : <span className="text-xs font-bold text-slate-400">{idx + 1}º</span>}
+                        <span className={`text-base ${medalColors[idx] ?? "text-muted-foreground"}`}>
+                          {idx < 3 ? <Medal className="h-4 w-4" /> : <span className="text-xs font-bold text-muted-foreground">{idx + 1}º</span>}
                         </span>
                         <div>
-                          <p className="text-sm font-medium text-slate-800">{item.nome_produto}</p>
-                          <p className="text-xs text-slate-400">Melhor mês: {item.mes_nome}</p>
+                          <p className="text-sm font-medium text-foreground">{item.nome_produto}</p>
+                          <p className="text-xs text-muted-foreground">Melhor mês: {item.mes_nome}</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-lg font-bold text-slate-900 tabular-nums">
+                        <p className="text-lg font-bold text-foreground tabular-nums">
                           {formatNumber(item.total_vendido)}
                         </p>
-                        <p className="text-xs text-slate-400">unidades</p>
+                        <p className="text-xs text-muted-foreground">unidades</p>
                       </div>
                     </div>
                   ))}
@@ -267,21 +271,21 @@ export default function RelatoriosView({
           </div>
 
           {/* Gráfico anual */}
-          <article className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-            <h2 className="mb-4 text-sm font-semibold text-slate-800">
+          <article className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <h2 className="mb-4 text-sm font-semibold text-foreground">
               Evolução de vendas em {year}
             </h2>
             {loading ? (
-              <div className="flex h-[320px] items-center justify-center text-sm text-slate-400">
+              <div className="flex h-[320px] items-center justify-center text-sm text-muted-foreground">
                 Carregando dados...
               </div>
             ) : (
               <ChartContainer config={monthlyChartConfig} className="h-[320px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={monthlySeries}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                    <XAxis dataKey="mes_nome" tick={{ fontSize: 11, fill: "#64748b" }} axisLine={false} tickLine={false} />
-                    <YAxis tickFormatter={(v) => formatNumber(v)} tick={{ fontSize: 11, fill: "#94a3b8" }} axisLine={false} tickLine={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                    <XAxis dataKey="mes_nome" tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
+                    <YAxis tickFormatter={(v) => formatNumber(v)} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
                     <ChartTooltip
                       content={<ChartTooltipContent formatter={(v) => [formatNumber(Number(v)), "Vendas"]} />}
                     />
