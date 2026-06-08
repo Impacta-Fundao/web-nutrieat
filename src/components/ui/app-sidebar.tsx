@@ -51,11 +51,6 @@ export function AppSidebar() {
       icon: ChartColumnIncreasing,
     },
     {
-      title: "Search",
-      url: "/",
-      icon: Search,
-    },
-    {
       title: "Settings",
       url: "/Settings",
       icon: Settings,
